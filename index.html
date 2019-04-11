@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Etch-a-Sketch</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <button id="btn">Clear all</button>
+    <div id="canvas">
+    </div>
+
+    <script>
+      
+      let columnsOfPixels = 6;
+      let numberOfPixels;
+      let pixel;
+      let pixels = [];
+      const clearingButton = document.querySelector('#btn');
+      clearingButton.addEventListener('click', clearAll);
+
+
+      function createGrid(){
+        numberOfPixels = columnsOfPixels**2;
+
+        const canvas = document.getElementById('canvas');
+        while (canvas.firstChild) {
+          canvas.removeChild(canvas.firstChild);
+        }
+
+        let newWidth = parseInt(getComputedStyle(canvas).width) / columnsOfPixels+'px';
+
+        for (let i = 0; i < numberOfPixels; i++) {
+          pixel = document.createElement('div');
+          pixel.className = 'pixel';
+          pixel.style.width = newWidth;
+          pixel.style.height = pixel.style.width;
+          canvas.appendChild(pixel);
+        }
+
+        //let pixelStyle = getComputedStyle(pixel);     
+        //canvas.style.width = columnsOfPixels*(parseInt(pixelStyle.width)+2*parseInt(pixelStyle.margin))+"px";
+
+        
+        pixels = Array.from(document.querySelectorAll(".pixel"));
+        pixels.forEach((pixel) => {
+          pixel.addEventListener('mouseover', e => {
+            pixel.classList.add("newColor");
+          });
+        });      
+      }
+
+      
+      function clearAll(){
+        pixels.forEach((pixel) => {
+          pixel.classList.remove('newColor');
+        });
+        newNumberOfColumns = prompt("How many rows/columns do you want?");
+        if (isNaN(newNumberOfColumns)) return;
+        columnsOfPixels = newNumberOfColumns;
+        console.log(columnsOfPixels);
+        console.log(numberOfPixels);
+
+        createGrid();
+      }
+
+      createGrid();
+
+      
+      console.log("hi");
+    </script>
+  </body>
+</html>
